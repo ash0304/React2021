@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ExpenseForm.css';
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   const [userInput, setUserInput] = useState({
     enteredTitle: '',
     enteredAmount: '',
@@ -44,7 +44,10 @@ const ExpenseForm = () => {
       data: new Date(enteredDate),
     };
 
-    console.log(expenseData);
+    console.log('child side', expenseData);
+    // pass data from child to parent
+    props.onSaveExpenseData(expenseData);
+    // clear the input
     setUserInput({
       enteredTitle: '',
       enteredAmount: '',

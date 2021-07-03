@@ -33,14 +33,35 @@ const cartReducer = (state, action) => {
       // 若不存在，就正常的合併舊值與新值
       updatedItems = state.items.concat(action.item);
     }
-    
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
     };
-  } else if (action.type === 'REMOVE') {
   }
-
+  if (action.type === 'REMOVE') {
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.id
+    );
+    const existingCartItem = state.items[existingCartItemIndex];
+    const updatedTotalAmount = state.totalAmount - existingCartItem.price;
+    let updatedItmes;
+    // Remove兩個情況 1. 已存在但移除一個就歸零，需移除整個item，用filter篩掉該目標
+    if (existingCartItem.amount === 1) {
+      updatedItmes = state.items.filter((item) => item.id !== action.id);
+    } else {
+      // 原有數量大於1個，只須該item的數量-1
+      const updatedItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount - 1,
+      };
+      updatedItmes = [...state.items];
+      updatedItmes[existingCartItemIndex] = updatedItem;
+    }
+    return {
+      items: updatedItmes,
+      totalAmount: updatedTotalAmount,
+    };
+  }
   return defaultCartState;
 };
 

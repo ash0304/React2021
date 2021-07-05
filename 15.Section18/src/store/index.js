@@ -7,6 +7,8 @@ const initialState = {
 
 const counterReducer = (state = initialState, action) => {
   if (action.type === 'increment') {
+    // always return new object cause direct change state value may not easy to debug
+    // because object may content reference value 
     return {
       counter: state.counter + 1,
       showCounter: state.showCounter,
@@ -28,7 +30,7 @@ const counterReducer = (state = initialState, action) => {
     return {
       counter: state.counter,
       showCounter: !state.showCounter,
-    }
+    };
   }
   return state;
 };

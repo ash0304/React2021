@@ -9,7 +9,7 @@ function App() {
   const fetchMoviesHandler = async () => {
     // Promise 改 async await 寫法 -> just syntax sugar
     const response = await fetch('https://swapi.dev/api/films/');
-    const data = response.json();
+    const data = await response.json();
 
     const transformedMovies = data.results.map((movieData) => {
       return {

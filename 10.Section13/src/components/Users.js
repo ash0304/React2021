@@ -20,7 +20,6 @@ class Users extends Component {
   }
 
   render() {
-
     const usersList = (
       <ul>
         {this.props.users.map((user) => (
